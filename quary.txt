@@ -1,0 +1,14 @@
+Insert into PAYMENT_INFO values ('test2','test2@gmail.com','1241123442123212','333','Apurva Patel','10/2019','Yes');
+
+Insert into THEATER values('theater1','123 Test street', 'Tuscaloosa','Alabama','Zipcode','Theater 1');
+
+Insert into ORDER_INFO values ('order1','09/2018','6:00PM','Open',0,0,2,2,'1241123442123212','theater1','test1','test1@gmail.com','Spiderman');
+
+insert into SHOWTIME values('theater1','Spiderman','12:00PM,4:00PM,8:00PM');
+insert into SHOWTIME values('theater2','Superman','12:00PM,4:00PM,8:00PM');
+insert into SHOWTIME values('theater1','Batman','12:00PM,4:00PM,8:00PM');
+
+insert into PREFERS values('theater3','test2','test2@gmail.com');
+insert into PREFERS values('theater1','test2','test2@gmail.com');
+
+insert into PLAYS_AT values('theater1','Spiderman','Yes');
