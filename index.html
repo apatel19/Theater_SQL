@@ -21,7 +21,7 @@
                <li>
                    <div class="mdl-textfield mdl-js-textfield">  
                        <input class="mdl-textfield__input fieldInput" type="text" id="login_email_address" required>
-                       <label class="mdl-textfield__label fieldInput" for="login_email_address" >Email</label>
+                       <label class="mdl-textfield__label fieldInput" for="login_email_address">Email</label>
                    </div>
                </li>
                <li>
@@ -85,6 +85,30 @@
                      </div>
        </div>
       
+       <div id="managerFunctionality">
+         <div><span style="font-size: 30px; color:royalblue; align-self: center; display: inline-block; padding: 40px;"> Choose Functionality </span></div><h2> </h2>
+                  <div>
+                           <button class="mdl-button mdl-js-button mdl-button--accent" value="" id="revenue">
+                             Revenue Report
+                           </button>
+                            <button class="mdl-button mdl-js-button mdl-button--primary" value="" id="popularMovie">
+                              Popular Movie report
+                           </button>
+                  </div>
+       </div>
+
+       <div id="cardReport">
+               <div><span style="font-size: 30px; color:royalblue; align-self: center; display: inline-block; padding: 40px;"> Revenue Report </span></div>
+               <ul id="revenueList"></ul>
+               <button align="right" style="display: inline-block; margin: 20px;" class="mdl-button mdl-js-button mdl-button--raised" id="report_back"> Back </button>
+       </div>
+
+       <div id="cardPopularMovie">
+               <div><span style="font-size: 30px; color:royalblue; align-self: center; display: inline-block; padding: 40px;"> Revenue Report </span></div>
+               <ul id ="popularList"> </ul>
+               <button align="right" style="display: inline-block; margin: 20px;" class="mdl-button mdl-js-button mdl-button--raised" id="popular_back"> Back </button>
+
+       </div>
        
       <div id="cardMovieList">
 
@@ -99,19 +123,11 @@
                   </li>
                </ul>
 
-            <table width="25%" height="25%" align="center"  id="movie_list_table" >
-            <thead>
-                  <tr>
-                   <div class="div_Personal_Account" align="center">
-                  <span style="display: inline-block; margin: 50px; text-align: center; font-size: 23pt;">
-                     Movie List
-                  </span>
-               </div>
-                  <!-- <th>Movie List</th> -->
-                  </tr>
-            </thead>
-            <tbody id="showList" align="center"></tbody>
-            </table>
+          <center> <div class="div_Personal_Account">
+                         <span style=" padding-bottom: 20px; padding-left:25px; text-align: center; font-size: 23pt;">Movie List</span>
+            </div> </center>
+         <center><ul style="list-style: none;" id="showMovieList"></ul> </center>  
+
       </div>
 
 
@@ -142,9 +158,9 @@
 
        <div id="cardSingleMovieData"  align="center" width="80%">
                <h2 style="color: royalblue; align-self:center;" id="movieSelectedTitle" >_____</h2>
-                     <p class="mdl-card__supporting-text"> Release Data: 1/1/2019 </p>
-                     <p class="mdl-card__supporting-text"> PG-13 | 128Min | Rating 1122  </p>
-                     <p class="mdl-card__supporting-text"> Action Movie </p> 
+                     <p class="mdl-card__supporting-text" id="releaseDate"> ___ </p>
+                     <p class="mdl-card__supporting-text" id="ratingLengthAverage"> ___   </p>         
+                     <p class="mdl-card__supporting-text" id="genre"> ____ </p> 
                      
                 <div class="mdl-card__actions mdl-card--border">
                      <button align="right"  class="mdl-button mdl-js-button mdl-button--primary" type="button" id="btnOverview_cardSingleMovieData"> Overview </button>
@@ -156,75 +172,40 @@
 
 
 
-        <div id="cardMovieOverview">
-            <h2 class="" style="color:royalblue; display: inline-block; padding-left: 16px; text-align: left;" id="" > Superman </h2>
+        <div id="cardMovieOverview"> 
+            <h2 class="" style="color:royalblue; display: inline-block; padding-left: 16px; text-align: left;" id="overview_title" > __ </h2>
                 <div class="mdl-card__supporting-text" align="left"> <span style="color:black; font-size: 20px"> Synopsis </span></div>
                 
                 <div>
-                   <span  class="mdl-card__supporting-text" style="font-size: 16px; display: inline-block; align-self: center;" >
-                      Superman is a fictional superhero created by writer Jerry Siegel and 
-                      artist Joe Shuster. He first appeared in Action Comics #1, a comic book 
-                      published on April 18, 1938.[1] He appears regularly in American comic 
-                      books published by DC Comics, and has been adapted to radio shows, newspaper 
-                      strips, television shows, movies, and video games.
-                      Superman was born on the planet Krypton, and as a baby named Kal-El, 
-                      was sent to Earth in a small spaceship by his scientist father Jor-El, 
-                      moments before Krypton was destroyed in a natural cataclysm. His ship 
-                      landed in the American countryside, where he was discovered and adopted 
-                      by Jonathan and Martha Kent, a farming couple. They named him Clark. 
-                      Clark displayed various superhuman abilities such as incredible strength and 
-                      impervious skin, and his foster parents advised him to use his gifts for the 
-                      benefit of humanity. Clark Kent resides in the fictional American city of Metropolis, 
-                      where he works as a journalist for the Daily Planet, a newspaper. 
-                      To protect his privacy, he changes into a colorful costume and uses the alias "Superman" 
-                      when fighting crime. Superman's love interest is his fellow journalist Lois Lane, and his 
-                      classic archenemy is the genius inventor Lex Luthor. He is a friend of many other superheroes 
-                      in the DC Universe, such as Batman and Wonder Woman.
-                       Superman is a cultural icon of the United States.[2][3][4][5] Superman 
-                       popularized the superhero genre and defined its conventions. He is to this day 
-                       one of the most lucrative superhero franchises.
-                   </span>
+                   <span  class="mdl-card__supporting-text" style="font-size: 16px; display: inline-block; align-self: center;" id="synopsis_text" > </span>
                 </div>
                <div class="mdl-card__supporting-text" align="left"> <span style="color:black; font-size: 18px"> Cast </span></div>
                 
                <div class="mdl-card__supporting-text" align="left" >
-                  <ul>
-                     <li> Chris Evans </li>
-                     <li> Robert D Jr.</li>
-                     <li> Anthony Maki</li>
+                  <ul id = "showCast">
+                     
                   </ul>
                </div>
                 <button align="right" style="display: inline-block; margin: 20px;" class="mdl-button mdl-js-button mdl-button--raised" id="btnBack_overview"> Back </button>
         </div>
 
         <div id="cardMovieReview">
-           <h2 class="" style="color:royalblue; display: inline-block; padding-left: 16px; text-align: left;" id="" > Superman </h2>
-           <p><span style="color:black; font-size: 15px; display: inline-block; padding-left: 20px;"> Average Rating: 5 </span></p>
-            <ul class="demo-list-three mdl-list">
-                  <li class="mdl-list__item mdl-list__item--three-line">
-                     <span class="mdl-list__item-primary-content">
-                        <i class="material-icons mdl-list__item-avatar">star</i>
-                        <span>Good movie <span style="color:black; font-size: 14px; display: inline-block; padding-left: 170px; "> Rating: 4.5 </span></span>
-                        <span class="mdl-list__item-text-body"> Best movie ever </span>
-                     </span>
-                     
-                  </li>
-            </ul>
+           <h2 class="" style="color:royalblue; display: inline-block; padding-left: 16px; text-align: left;" id="movieReview_title" > ___ </h2>
+           <p><span style="color:black; font-size: 15px; display: inline-block; padding-left: 20px;" id ="reviewAverageRating"> Average Rating: 5 </span></p>
+            <ul class="demo-list-three mdl-list" id="showReview"> </ul>
                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" style="display: inline-block; margin: 20px;" id="btnAddReview"> Give Review </button>
                <button align="right" style="display: inline-block; margin: 20px;" class="mdl-button mdl-js-button mdl-button--raised" id="btnBack_movieReview"> Back </button>
          </div>
 
          <div id="cardGiveReview">
-             <h2 class="" style="color:royalblue; display: inline-block; padding-left: 16px; text-align: left;" id="" > Superman </h2>
+             <h2 class="" style="color:royalblue; display: inline-block; padding-left: 16px; text-align: left;" id="giveReview_title" > Superman </h2>
              <div>
                 <span style="font-size: 17px; display: inline-block; padding-left: 40px; "> Rating: 
                    <form>
-                  <br>
-                  <input type="radio" name="rating" value=1 checked > 1 
-                  <input type="radio" name="rating" value=2  > 2 
-                  <input type="radio" name="rating" value=3  > 3 
-                  <input type="radio" name="rating" value=4  > 4 
-                  <input type="radio" name="rating" value=5  > 5 <br>
+                  <ul id="showRatingOption" style="list-style: none; display: inline;" >
+                   
+                   </ul>
+                     <br>
                      
                   <div class="mdl-textfield mdl-js-textfield">
                      <input class="mdl-textfield__input" type="text" id="added_review_title">
@@ -232,8 +213,8 @@
                  </div>
                   <br>
                  <div class="mdl-textfield mdl-js-textfield" height="50%">
-                     <textarea class="mdl-textfield__input" type="text" rows= "5" id="added_review_comment)" ></textarea>
-                     <label class="mdl-textfield__label" for="added_review_comment">Comment</label>
+                     <textarea class="mdl-textfield__input" type="text" rows= "5" id="added_review_comment" ></textarea>
+                     <label class="mdl-textfield__label" for="added_review_comment">Comment (optional)</label>
                  </div>
                </form>
                </span>
@@ -247,36 +228,27 @@
                <div><span style="font-size: 30px; color:royalblue; align-self: center; display: inline-block; padding: 40px;"> Choose Theater </span></div>
                   <div>
                      <span style="font-size: 18px; display: inline-block; padding-left: 40px;"> Saved Theater </span>
-                     <ul style="padding-left: 40px;">
-                     <span style="display: inline-block; padding-left: 40px;">
-                           <input type="radio" name="savedTheater"> AMC <br>
-                           <input type="radio" name="savedTheater"> Fandago <br>
-                           <input type="radio" name="savedTheater"> Cobb <br>
-                           <input type="radio" name="savedTheater"> Planner <br>
-                        </span> 
-                     </ul>
+                     <ul style="padding-left: 40px;" id="savedTheater"></ul>
                   </div>
-                  <div>
-                     <span style="font-size: 18px; display: inline-block; padding-left: 40px;"> Search Theater 
-                        <form>
-                              <div class="mdl-textfield mdl-js-textfield">
+                  <div> <span style="font-size: 18px; display: inline-block; padding-left: 40px; "> or Search Theater </span> </div>
+                       <ul style="list-style: none;">
+                                 <li><div class="mdl-textfield mdl-js-textfield">
                                     <input class="mdl-textfield__input" type="text" id="added_city">
                                     <label class="mdl-textfield__label" for="added_city">City</label>
-                                </div>
-                                <div class="mdl-textfield mdl-js-textfield">
+                                </div></li> 
+                                 <li><div class="mdl-textfield mdl-js-textfield">
                                     <input class="mdl-textfield__input" type="text" id="added_state">
                                     <label class="mdl-textfield__label" for="added_state">State</label>
-                                </div>
-                                <button class="mdl-button mdl-js-button">Search</button>
-                        </form>
-                        <div>
-                        </div>
-                     </span>
-                     
-                  </div>
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" style="display: inline-block; margin: 20px;" id="btnSelectTime"> Next </button>
-            <button align="right" style="display: inline-block; margin: 20px;" class="mdl-button mdl-js-button mdl-button--raised" id="btnBack_cardChooseTheater"> Back </button>
-        </div>
+                                 </div></li>  
+                              <li><button class="mdl-button mdl-js-button" id="btnSearchTheater">Search</button></li>  
+                        </ul> 
+
+                        <ul id="searchedTheaterList"></ul>
+
+           <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" style="display: inline-block; margin: 20px;" id="btnSelectTime"> Next </button>
+           <button align="right" style="display: inline-block; margin: 20px;" class="mdl-button mdl-js-button mdl-button--raised" id="btnBack_cardChooseTheater"> Back </button>
+                              
+         </div>
             
         <div id="cardChooseTime">
 
@@ -301,12 +273,12 @@
         <div id="cardPurchaseTickit">
          <div><span style="font-size: 30px; color:royalblue; align-self: center; display: inline-block; padding: 20px;"> Buy Tickit </span></div>
          <hr>
-           <div><span style="display: inline-block; padding-left: 60px; color:black; font-size: 20px;"> Superman </span></div>
-           <div><span style="display: inline-block; padding-left: 90px; padding-top: 10px; padding-bottom: 10px; color:black; font-size: 14px;"> PG-13 | 198 min</span></div> 
-           <div><span style="display: inline-block; padding-left: 90px; padding-bottom: 10px; color:black; font-size: 16px;"> Sunday, May 22nd | 8:00PM </span></div>
+           <div><span style="display: inline-block; padding-left: 60px; color:black; font-size: 20px;" id="title_purchase"> Superman </span></div>
+           <div><span style="display: inline-block; padding-left: 90px; padding-top: 10px; padding-bottom: 10px; color:black; font-size: 14px;" id="ratingLength_purchase"> PG-13 | 198 min</span></div> 
+           <div><span style="display: inline-block; padding-left: 90px; padding-bottom: 10px; color:black; font-size: 16px;" id="dateTime_purchase"> Sunday, May 22nd | 8:00PM </span></div>
         
            <div><span style="font-size: 20px; display: inline-block; padding-left: 60px;"> Theater </span></div> 
-           <div><span style="display: inline-block; padding-left: 90px; padding-top: 10px; padding-bottom: 10px; color:black; font-size: 16px;"> 123 Test drive Tuscaloosa AL 35401 </span></div> 
+           <div><span style="display: inline-block; padding-left: 90px; padding-top: 10px; padding-bottom: 10px; color:black; font-size: 16px;" id="adress_purchase"> 123 Test drive Tuscaloosa AL 35401 </span></div> 
          <hr>
 
          <div> <span style="font-size: 25px; display: inline-block; padding-left: 40px; color: teal;"> How many tickits? </span> </div>
@@ -314,17 +286,21 @@
                <li>
                   <label style="font-size: 18px; display: inline-block; padding-left: 40px; padding-bottom: 20px;">Adult: </label> 
                   <select size="1" id="adultTickit_dropdown" style="max-width:5%; max-height:5%; background-color: gray; "></select>
+                  <span id="AdultTotal"> 0 </span>
                </li>
                <li>
                   <label style="font-size: 18px; display: inline-block; padding-left: 40px; padding-bottom: 20px;">Senior: </label>
                   <select size="1" id="seniorTickit_dropdown" style="max-width:5%; max-height:5%; background-color: gray; "></select>
+                  <span id="SeniorTotal"> 0 </span>
                </li>
                <li>
                   <label style="font-size: 18px; display: inline-block; padding-left: 40px;">Child: </label>
                   <select size="1" id="childTickit_dropdown" style="max-width:5%; max-height:5%; background-color: gray; "></select>
+                  <span id="ChildTotal"> 0 </span>
                </li>
+               <li> <span id = "GrandTotal"></span> </li>
             </ul>
-           
+            
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" style="display: inline-block; margin: 20px;" id="btnPayment"> Next </button>
             <button align="right" style="display: inline-block; margin: 20px;" class="mdl-button mdl-js-button mdl-button--raised" id="btnBack_cardPurchaseTickit"> Back </button>
       
@@ -333,12 +309,12 @@
          <div id="cardPaymentInformation">
             <span style="font-size: 30px; color:royalblue; align-self: center; display: inline-block; padding: 20px;"> Buy Tickit </span>
              <hr>
-               <div><span style="display: inline-block; padding-left: 60px; color:black; font-size: 20px;"> Superman </span></div>
-               <div><span style="display: inline-block; padding-left: 90px; padding-top: 10px; padding-bottom: 10px; color:black; font-size: 14px;"> PG-13 | 198 min</span></div> 
-               <div><span style="display: inline-block; padding-left: 90px; padding-bottom: 10px; color:black; font-size: 16px;"> Sunday, May 22nd | 8:00PM </span></div>
+               <div><span style="display: inline-block; padding-left: 60px; color:black; font-size: 20px;" id="title_payment"> ___ </span></div>
+               <div><span style="display: inline-block; padding-left: 90px; padding-top: 10px; padding-bottom: 10px; color:black; font-size: 14px;" id="lengthTime_payment"> ____</span></div> 
+               <div><span style="display: inline-block; padding-left: 90px; padding-bottom: 10px; color:black; font-size: 16px;" id="dateTime_payment"> ____ </span></div>
             
                <div><span style="font-size: 20px; display: inline-block; padding-left: 60px;"> Theater </span></div> 
-               <div><span style="display: inline-block; padding-left: 90px; padding-top: 10px; padding-bottom: 10px; color:black; font-size: 16px;"> 123 Test drive Tuscaloosa AL 35401 </span></div> 
+               <div><span style="display: inline-block; padding-left: 90px; padding-top: 10px; padding-bottom: 10px; color:black; font-size: 16px;" id="address_payment"> 123 Test drive Tuscaloosa AL 35401 </span></div> 
             <hr>
             <div> <span style="font-size: 25px; display: inline-block; padding-left: 40px; color: teal;"> Payment Information </span> </div>
 
@@ -366,10 +342,9 @@
                      <input class="mdl-textfield__input" type="text" id="added_cardExpiration">
                 </div>
             </span>
-            <div><span style="display:inline-block; padding-left: 40px;">
-            <input type="checkbox"> 
-            <label> Save this card for future payments.</label>
-            </span></div>
+
+            <ul id="saveCard"> </ul>
+
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" style="display: inline-block; margin: 20px;" id="btnSubmitPayment"> Submit </button>
             <button align="right" style="display: inline-block; margin: 20px;" class="mdl-button mdl-js-button mdl-button--raised" id="btnBack_cardPaymentInformation"> Back </button>
          </div>
@@ -432,15 +407,15 @@
              <div><center><h3 class="" style="color:royalblue; display: inline-block; padding-left: 16px;" id="" > Order Detail </h3></center></div> 
 
              <hr>
-               <div><span style="display: inline-block; padding-left: 60px; color:black; font-size: 20px;"> Superman </span></div>
-               <div><span style="display: inline-block; padding-left: 90px; padding-top: 10px; padding-bottom: 10px; color:black; font-size: 14px;"> PG-13 | 198 min</span></div> 
-               <div><span style="display: inline-block; padding-left: 90px; padding-bottom: 10px; color:black; font-size: 16px;"> Sunday, May 22nd | 8:00PM </span></div>
+               <div><span style="display: inline-block; padding-left: 60px; color:black; font-size: 20px;" id="title_orderDetail"> ____ </span></div>
+               <div><span style="display: inline-block; padding-left: 90px; padding-top: 10px; padding-bottom: 10px; color:black; font-size: 14px;" id="ratingLength_orderDetail" > ____ </span></div> 
+               <div><span style="display: inline-block; padding-left: 90px; padding-bottom: 10px; color:black; font-size: 16px;" id="dateTile_orderDetail"> ____ </span></div>
             
                <div><span style="font-size: 20px; display: inline-block; padding-left: 60px;"> Theater </span></div> 
-               <div><span style="display: inline-block; padding-left: 90px; padding-top: 10px; padding-bottom: 10px; color:black; font-size: 16px;"> 123 Test drive Tuscaloosa AL 35401 </span></div> 
+               <div><span style="display: inline-block; padding-left: 90px; padding-top: 10px; padding-bottom: 10px; color:black; font-size: 16px;" id="theaterInfo_orderDetail"> __ </span></div> 
               
-               <div><span style="font-size: 20px; display: inline-block; padding-left: 60px;"> Tickets </span></div>
-                   <div><span style="display: inline-block; padding-left: 90px; padding-bottom: 10px; color:black; font-size: 16px;"> 1 adult : $11.54 </span></div>
+               <div><span style="font-size: 20px; display: inline-block; padding-left: 60px;" > Tickets </span></div>
+                   <div><span style="display: inline-block; padding-left: 90px; padding-bottom: 10px; color:black; font-size: 16px;" id="tickit_orderDetails"> ___ </span></div>
             <hr>
 
             <button class="mdl-button mdl-js-button mdl-button--raised  mdl-js-ripple-effect" 
@@ -467,7 +442,7 @@
             </div>
             <hr>
             <button class="mdl-button mdl-js-button mdl-button--raised  mdl-js-ripple-effect" 
-               style="display: inline-block; margin: 40px;" id="btnDeleteThisCard"> Delete </button>
+               style="display: inline-block; margin: 40px;" id="btnDeletePaymentCard"> Delete </button>
             <button align="right" style="display: inline-block; margin: 20px;" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" 
             id="btnBack_savedPaymentInfo"> Back </button>
         </div>
