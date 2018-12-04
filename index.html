@@ -115,9 +115,9 @@
             <ul class="demo-list-icon mdl-list">
                   <li class="mdl-list__item">
                         <button class="mdl-button mdl-js-button mdl-button--primary" id="btnMeClicked">
-                        <span class="mdl-list__item-primary-content">
+                        <span class="mdl-list__item-primary-content" id="setUsername">
                         <i class="material-icons mdl-list__item-icon">person</i>
-                        Me (Username)
+                           Me (Username)
                         </span>
                         </button>
                   </li>
@@ -244,6 +244,8 @@
                         </ul> 
 
                         <ul id="searchedTheaterList"></ul>
+               
+                        <ul id="saveTheater"> </ul> 
 
            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" style="display: inline-block; margin: 20px;" id="btnSelectTime"> Next </button>
            <button align="right" style="display: inline-block; margin: 20px;" class="mdl-button mdl-js-button mdl-button--raised" id="btnBack_cardChooseTheater"> Back </button>
@@ -318,8 +320,7 @@
             <hr>
             <div> <span style="font-size: 25px; display: inline-block; padding-left: 40px; color: teal;"> Payment Information </span> </div>
 
-            <!-- <div> <span style="font-size: 20px; display: inline-block; padding-left: 60px; padding-top: 20px; padding-right: 20px; color: black;"> Use saved card </span></div>
-            <select size="1" id="savedCard_dropdown" style="max-width:20%; max-height:3%; color:black; background-color:#d6e7d2 ; "></select> -->
+          
             
             <label style="font-size: 20px; display: inline-block; padding-left: 60px; padding-top: 20px; padding-right: 20px;">Use saved card </label> 
             <select size="1" id="savedCard_dropdown" style="max-width:13%; max-height:5%; background-color: d6e7d2; color:black; "></select>
@@ -345,7 +346,7 @@
 
             <ul id="saveCard"> </ul>
 
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" style="display: inline-block; margin: 20px;" id="btnSubmitPayment"> Submit </button>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" style="display: inline-block; margin: 20px;" id="btnSubmitPayment"> _Submit </button>
             <button align="right" style="display: inline-block; margin: 20px;" class="mdl-button mdl-js-button mdl-button--raised" id="btnBack_cardPaymentInformation"> Back </button>
          </div>
 
@@ -353,18 +354,18 @@
          <div id="cardOrderDone">
                <span style="font-size: 30px; color:royalblue; align-self: center; display: inline-block; padding: 20px;"> Buy Tickit </span>
                <hr>
-                 <div><span style="display: inline-block; padding-left: 60px; color:black; font-size: 20px;"> Superman </span></div>
-                 <div><span style="display: inline-block; padding-left: 90px; padding-top: 10px; padding-bottom: 10px; color:black; font-size: 14px;"> PG-13 | 198 min</span></div> 
-                 <div><span style="display: inline-block; padding-left: 90px; padding-bottom: 10px; color:black; font-size: 16px;"> Sunday, May 22nd | 8:00PM </span></div>
+                 <div><span style="display: inline-block; padding-left: 60px; color:black; font-size: 20px;" id="title_done"> Superman </span></div>
+                 <div><span style="display: inline-block; padding-left: 90px; padding-top: 10px; padding-bottom: 10px; color:black; font-size: 14px;" id="ratingLength_done"> PG-13 | 198 min</span></div> 
+                 <div><span style="display: inline-block; padding-left: 90px; padding-bottom: 10px; color:black; font-size: 16px;" id="dateTimeDone"> Sunday, May 22nd | 8:00PM </span></div>
               
                  <div><span style="font-size: 20px; display: inline-block; padding-left: 60px;"> Theater </span></div> 
-                 <div><span style="display: inline-block; padding-left: 90px; padding-top: 10px; padding-bottom: 10px; color:black; font-size: 16px;"> 123 Test drive Tuscaloosa AL 35401 </span></div> 
+                 <div><span style="display: inline-block; padding-left: 90px; padding-top: 10px; padding-bottom: 10px; color:black; font-size: 16px;" id="address_done"> 123 Test drive Tuscaloosa AL 35401 </span></div> 
               <hr>
 
               <div>
                  <span style="font-size: 20px; display: inline-block; padding-left: 60px;">
                      Your order confirmation number is : 
-                     <label id="orderConfirmationNumber"> 12345 </label>
+                     <span id ="confirmation_num"> ____ </span>
                  </span>
               </div>
               <span style="font-size: 14px; display: inline-block; padding-top: 20px; color: royalblue; padding-left: 60px;"> Thank you for your order please save your confirmation number. </span>
@@ -380,8 +381,8 @@
               <div>
                  <span style="display: inline-block; padding: 40px">
                      <label>Enter in order id to search : </label>
-                     <input type="text" name="search_orderId" value="">
-                     <button class="">Search</button>
+                     <input type="text" name="search_orderId" value="" id="searchForThisOrder">
+                     <button class="" id="btnSearchOrder">Search</button>
                  </span>
              </div> 
             <div>

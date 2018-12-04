@@ -20,7 +20,12 @@ switch($_POST['functionname']){
                 break;
         case 'updateorderstatus':
                 $orderid = $_POST['order_id'];
-                UpdateOrderStatus($orderid);
+                $cost = $_POST['cost'];
+                $monthYear = $_POST['monthYear'];
+                $minusThis = $_POST['minusThis'];
+                $tickitsToMinus = $_POST['tickitsToMinus'];
+                $movie = $_POST['movie'];
+                UpdateOrderStatus($orderid,$cost,$monthYear,$minusThis,$tickitsToMinus,$movie);
                 break;    
         case 'deletesavedcard':
                 $cardnumber = $_POST['cardnumber'];
@@ -54,7 +59,14 @@ switch($_POST['functionname']){
                 $currentUsername = $_POST['username'];
                 $email = $_POST['email'];
                 $movie = $_POST['movie'];
-                SaveToOrder($orderid, $date, $time, $status,$senior,$child,$adult,$total_tickit,$cost,$cardNo,$theaterId,$currentUsername,$email,$movie);
+                $monthYear = $_POST['monthYear'];
+                SaveToOrder($orderid, $date, $time, $status,$senior,$child,$adult,$total_tickit,$cost,$cardNo,$theaterId,$currentUsername,$email,$movie, $monthYear);
+                break;
+        case 'savetheater':
+                $theaterid = $_POST['theater'];
+                $emai = $_POST['currentUser'];
+                $name = $_POST['currentUsername'];
+                SaveTheater($theaterid,$emai,$name);
                 break;
 }
 
@@ -105,7 +117,7 @@ switch($_POST['functionname']){
             $conn->close();
     }
 
-    function UpdateOrderStatus($orderid){
+    function UpdateOrderStatus($orderid, $cost, $monthYear, $minusThis, $tickitsToMinus, $movie){
         $servername = "localhost";
         $username = "root";
         $password = "root";
@@ -117,11 +129,26 @@ switch($_POST['functionname']){
                 die("Connection failed: " . $conn->connect_error);
         }   
         
-        $sql = "UPDATE ORDER_INFO SET Status='Cancelled' Where Order_Id='$orderid';";
+        $sql = "UPDATE ORDER_INFO SET Status='Cancelled', TotalCost = '$cost'  Where Order_Id='$orderid';";
+
+        $revenue = "INSERT INTO REVENUE_REPORT VALUES('$monthYear','$minusThis');";
+
+        $popular = "INSERT INTO POPULAR_MOVIES VALUES('$monthYear','$movie', '$tickitsToMinus');";
+
+
         if(!$result = $conn->query($sql)){
                     die('There was an error running the query [' . $conn->error . ']');
         } else {
-               echo "1";
+                if(!$rev = $conn->query($revenue)){
+                        die('There was an error running the query revenue. [' . $conn->error . ']');
+                } 
+                else {
+                        if (!$pop = $conn->query($popular)){
+                                die('There was an error running the query popular movie. [' . $conn->error . ']');
+                        } else {
+                                echo "1";
+                        }
+                }
         }
             // echo $result;
             $conn->close();
@@ -195,7 +222,7 @@ switch($_POST['functionname']){
     }
 
 
-    function SaveToOrder($orderid, $date, $time, $status,$senior,$child,$adult,$total_tickit,$cost,$cardNo,$theaterId,$currentUsername,$email){
+    function SaveToOrder($orderid, $date, $time, $status,$senior,$child,$adult,$total_tickit,$cost,$cardNo,$theaterId,$currentUsername,$email,$movie,$monthYear){
         $servername = "localhost";
         $username = "root";
         $password = "root";
@@ -206,7 +233,42 @@ switch($_POST['functionname']){
         if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
         }  
-        $sql = "INSERT INTO `ORDER_INFO` VALUES ('$orderid','$date','$time','$status',$senior,$child,$adult,$total_tickit,'$cost','$cardNo','$theaterId','$currentUsername','$email','$movie');";
+        $sql = "INSERT INTO `ORDER_INFO` VALUES ('$orderid','$date','$time','$status','$senior','$child','$adult','$total_tickit','$cost','$cardNo','$theaterId','$currentUsername','$email','$movie');";
+
+        $revenue = "INSERT INTO REVENUE_REPORT VALUES('$monthYear','$cost');";
+
+        $popular = "INSERT INTO POPULAR_MOVIES VALUES('$monthYear','$movie', $total_tickit);";
+
+        if(!$result = $conn->query($sql)){
+                die('There was an error running the query [' . $conn->error . ']');
+        } else {
+                if(!$rev = $conn->query($revenue)){
+                        die('There was an error running the query revenue. [' . $conn->error . ']');
+                } 
+                else {
+                        if (!$pop = $conn->query($popular)){
+                                die('There was an error running the query popular movie. [' . $conn->error . ']');
+                        } else {
+                                echo "1";
+                        }
+                }
+        }
+            // echo $result;
+            $conn->close();
+    }
+
+    function SaveTheater($theaterid, $email, $name){
+        $servername = "localhost";
+        $username = "root";
+        $password = "root";
+        $dbname = "Theater_Final";
+        $valid = "false";
+        $conn = new mysqli($servername, $username, $password, $dbname);
+            // Check connection
+        if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+        }  
+        $sql = "INSERT INTO `PREFERS` VALUES ('$theaterid','$name','$email');";
 
         if(!$result = $conn->query($sql)){
                 die('There was an error running the query [' . $conn->error . ']');
@@ -215,7 +277,5 @@ switch($_POST['functionname']){
         }
             // echo $result;
             $conn->close();
-        
-
     }
 ?>

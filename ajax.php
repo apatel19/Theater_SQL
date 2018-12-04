@@ -65,6 +65,9 @@
         case 'populardata';
             GetPopularMovie();
             break;
+        case 'getCancellationCharge':
+            GetCancellationCharge();
+            break;
     }
 
     function LogInData($email, $pass){
@@ -190,12 +193,12 @@
                 die("Connection failed: " . $conn->connect_error);
         } 
         $movie = array();
-        $sql = "SELECT SUM(Total_bought_tickits) as sumtickit, Movie_title From POPULAR_MOVIES GROUP BY Movie_title;";
+        $sql = "SELECT Movie_month, Movie_title, SUM(Total_bought_tickits) as 'sumtickit' from POPULAR_MOVIES GROUP BY Movie_month, Movie_title ORDER BY Movie_month";
         $result = $conn->query($sql);
         
         if ($result->num_rows >= 0) {
             while($row = $result->fetch_assoc()) {
-                array_push($movie,["movie"=>$row["Movie_title"],"tickit"=>$row["sumtickit"]]);
+                array_push($movie,["monthYear"=>$row["Movie_month"],"movie"=>$row["Movie_title"],"tickit"=>$row["sumtickit"]]);
             }
          } else {
              echo json_encode("0 results");
@@ -316,7 +319,6 @@
             }
          } else {
              echo json_encode("0 results");
-
         }
         echo json_encode($orders);
     }
@@ -479,6 +481,30 @@
             while($row = $maxResult->fetch_assoc()){
                 echo json_encode($row["maxnum"]);
             }
+        } else {
+            echo json_encode("0");
+        }
+    }
+
+    function GetCancellationCharge(){
+        $servername = "localhost";
+        $username = "root";
+        $password = "root";
+        $dbname = "Theater_Final";
+        
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
+        if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+        }
+
+        $sql = "SELECT Cancellation_Fee From SYSTEM_INFO;";
+        $maxResult = $conn->query($sql);
+
+        if ($maxResult->num_rows > 0){
+            $row = $maxResult->fetch_assoc();
+                echo json_encode($row["Cancellation_Fee"]);
+        
         } else {
             echo json_encode("0");
         }

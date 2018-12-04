@@ -287,7 +287,7 @@
                     
                     for (var i = 0; i < valid.length; i++){
                         var li = document.createElement('li');
-                        li.innerHTML = valid[i]['movie']  + " Revenue: " + valid[i]["tickit"] + " tickits";
+                        li.innerHTML = valid[i]['monthYear'] + "\t" + valid[i]['movie']  + "\t Total Tickit Sell: " + valid[i]["tickit"] + " tickits";
                         ul.appendChild(li);
                     }
                 } else {
@@ -313,6 +313,7 @@
                     if (valid[0]['type'] == "customer"){
                         currentUsername = valid[0]['username'];
                         currentUser = email;
+                        document.getElementById("setUsername").innerHTML = currentUsername + " Account";
                         console.log(currentUsername);
                         loadDataWithCurrentMovies();
                     } else {
@@ -369,6 +370,7 @@
                     if (accountType == "customer"){
                         currentUser = email;
                         currentUsername = username;
+                        document.getElementById("setUsername").innerHTML = currentUsername + " Account";
                         loadDataWithCurrentMovies();
                     } else {
                          $("#managerFunctionality").show();
@@ -436,7 +438,6 @@
 
    async function movieSelected(title){
         console.log(title);
-        selectedMovie_orderInfo = title;
        await $.ajax({
         url:'ajax.php',
         type:'GET',
@@ -445,6 +446,7 @@
               var str = JSON.parse(data);
               if (str[0]["rating"] != ""){
                   $("#cardMovieList").hide();
+                  selectedMovie_orderInfo = str[0]["title"];
                   document.getElementById("movieSelectedTitle").innerHTML = str[0]["title"];
                   document.getElementById("releaseDate").innerHTML = 'Release Date ' + str[0]["releaseDate"];
                   document.getElementById("ratingLengthAverage").innerHTML = str[0]["rating"] + ' | ' + str[0]["length"] + ' | ' + 'AVG: '+  str[0]["avgRating"];
@@ -765,6 +767,28 @@ var selectedPaymentCard_orderInfo = "";
                 ul.appendChild(li);
             }
 
+             saveTheaterForFuture = "";   
+             var ul = document.getElementById('saveTheater');
+             ul.innerHTML = "";
+             
+             var li = document.createElement('li');
+             var input = document.createElement('input');
+             input.type = "checkbox";
+             input.addEventListener('click', function(){
+                        saveThisTheater(input.checked);
+                    })
+             var label = document.createElement('label');
+             label.innerHTML = "Save this theater for future.";
+             li.appendChild(input)
+             li.appendChild(label)
+             ul.appendChild(li);
+
+
+
+    }
+    var saveTheaterForFuture = "";
+    function saveThisTheater(x){
+        saveTheaterForFuture = x;
     }
 
     function checkIfTheaterIsSelected(){
@@ -772,6 +796,9 @@ var selectedPaymentCard_orderInfo = "";
             alert("Select your theater");
             return;
         } else {
+            if (saveTheaterForFuture){
+                saveTheaterForFuture1(selectedTheater_orderInfo);
+            }
             generateDates();
             generateTime();
             $("#cardChooseTime").show();
@@ -779,6 +806,24 @@ var selectedPaymentCard_orderInfo = "";
         }
     }
 
+  async  function saveTheaterForFuture1(x){
+            console.log(x);
+         await  $.ajax({
+                        url:'post.php',
+                        type:'POST',
+                        data:{functionname:'savetheater',theater:x,currentUser:currentUser,currentUsername:currentUsername}, //Pass your varibale in data
+                        success:function(json_data){
+                                console.log(json_data);
+                                if (json_data != 1) {
+                                    alert (json_data);
+                                    return;
+                                } else {
+                                    console.log("Saved");
+                                }
+                            }
+                     })
+
+    }
   
     function generateDates() {
         var ul = document.getElementById('date');
@@ -867,13 +912,6 @@ var selectedPaymentCard_orderInfo = "";
         function selectedMovieTime(time){
             selectedTime_orderInfo = time;
         }
-/***********
- * 
- * 
- * 
- * 
- * 
- */
 
       async  function checkIfTimeAndDateSelected (){
             if (selectedTime_orderInfo == "" || selectedDate_orderInfo == ""){
@@ -913,6 +951,8 @@ var selectedPaymentCard_orderInfo = "";
         }
 
         var charge1 = 0, charge2 = 0, charge3 = 0;
+       
+       
         function buyTickitDropDownList() {
             var typeOfTickit = ["adultTickit_dropdown", "seniorTickit_dropdown", "childTickit_dropdown"];
             for (var i = 0; i < typeOfTickit.length; i++){
@@ -1033,7 +1073,7 @@ var selectedPaymentCard_orderInfo = "";
             saveCardForFuture = x;
             console.log(x + "  saved");
         }
-
+        var generatedOrderId = "";
        async function addSavedCardsToDropDown () {
             var _select = document.getElementById('savedCard_dropdown');
             _select.addEventListener('change', function(){
@@ -1096,8 +1136,30 @@ var selectedPaymentCard_orderInfo = "";
                 alert ("Select a payment mthod");
                 return;
             }
+           var OrderId = "";
+           var monthYear = "";
            
-           
+            await  $.ajax({
+                url:'ajax.php',
+                type:'GET',
+                data:{functionname:'getMaxNumOrderInfo'}, //Pass your varibale in data
+                success:function(json_data){
+                        console.log(json_data);
+                        var res = JSON.parse(json_data);
+                        console.log(res);
+                        if (res != "0"){
+                            OrderId = parseInt(res) + 1;
+                            var temp = selectedDate_orderInfo.split('/');
+                            monthYear = temp[0] + "/" + temp[2];
+                            console.log(monthYear);
+                        } else {
+                             alert("Network error.");
+                             return;
+                        }
+                    }
+                })
+
+                 console.log(OrderId);
          if (saveCardForFuture){
                      await  $.ajax({
                         url:'post.php',
@@ -1112,64 +1174,55 @@ var selectedPaymentCard_orderInfo = "";
                                 }
                             }
                      })
-          
-}
-            var OrderId = await getMaxNumFromOrderInfo();
-            var newOrderId = parseInt(OrderId) + 1;
-            console.log("***");
-            console.log(newOrderId);
-            console.log(selectedDate_orderInfo);
-            console.log(selectedTime_orderInfo);
-             console.log(selectedSenior_orderInfo);
-            console.log(selectedAdult_orderInfo);
-            console.log(totalTickits_orderInfo);
-             console.log(totalCost_orderInfo);
-            console.log(selectedTheater_orderInfo);
-            console.log(currentUser);
-             console.log(currentUsername);
+            }
             console.log(selectedMovie_orderInfo);
-            console.log(selectedPaymentCard_orderInfo);
+            var order = OrderId.toString();
             await $.ajax({
                 url:'post.php',
                 type:'POST',
-                data:{functionname:'saveToOrder',orderid:newOrderId,date:selectedDate_orderInfo,time:selectedTime_orderInfo,status:"Unused",senior:selectedSenior_orderInfo,
+                data:{functionname:'saveToOrder',orderid:order,date:selectedDate_orderInfo,time:selectedTime_orderInfo,status:"Unused",senior:selectedSenior_orderInfo,
                                                 child:selectedChild_orderInfo,adult:selectedAdult_orderInfo,total_tickit:totalTickits_orderInfo,cost:totalCost_orderInfo,
-                                                cardNo:selectedPaymentCard_orderInfo,theaterId:selectedTheater_orderInfo,username:currentUsername,emai:currentUser,movie:selectedMovie_orderInfo}, //Pass your varibale in data
+                                                cardNo:selectedPaymentCard_orderInfo,theaterId:selectedTheater_orderInfo,username:currentUsername,email:currentUser,
+                                                movie:selectedMovie_orderInfo,monthYear:monthYear}, //Pass your varibale in data
                 success:function(json_data){
                         console.log(json_data);
                         if (json_data != 1) {
                             alert (json_data);
                             return;
                         } else {
-                            print("Entered successfully");
+                           console.log ("Entered successfully");
+                           $("#cardOrderDone").show();
+                           $("#cardPaymentInformation").hide();
+                           showConfirmation(order);
                         }
                     }
         })
-                
-
-            // $("#cardOrderDone").show();
-            // $("#cardPaymentInformation").hide();
-            
+   
         }
 
-      async  function getMaxNumFromOrderInfo(){
-            await  $.ajax({
+       async  function showConfirmation(order) {
+             var address = "";
+            await $.ajax({
                 url:'ajax.php',
                 type:'GET',
-                data:{functionname:'getMaxNumOrderInfo'}, //Pass your varibale in data
+                data:{functionname:'getSingleTheaterInfo',theaterId:selectedTheater_orderInfo}, //Pass your varibale in data
                 success:function(json_data){
                         console.log(json_data);
                         var res = JSON.parse(json_data);
                         console.log(res);
-                        if (res != "0"){
-                            
-                            return parseInt(res) + 1;
+                        if (res){
+                            address = res[0]['street'] + " " + res[0]['city'] + " " + res[0]['state'] + " " + res[0]['zipcode'];
                         } else {
-                             alert("Network error.");
-                             return;
+                            alert("You have no theater info.");
+                            return;
                         }
                     }
                 })
+            document.getElementById('title_done').innerHTML = selectedMovie_orderInfo;
+            document.getElementById('ratingLength_done').innerHTML = ratingLength_orderInfo;
+            document.getElementById('dateTimeDone').innerHTML = selectedDate_orderInfo + " | " + selectedTime_orderInfo;
+            document.getElementById('address_done').innerHTML = address;
+            document.getElementById('confirmation_num').innerHTML = order;
         }
 
         function checkForInputCardDetails(){
@@ -1191,8 +1244,35 @@ var selectedPaymentCard_orderInfo = "";
             return cardDetail;
         }
 
+        /*******
+         * 
+         * 
+         * 
+         * 
+         */
+        var histData = "";
+     $("#btnSearchOrder").click(function(){
+       var searchFor = $("#searchForThisOrder").val();
+       console.log(searchFor);
+       var temp = [];
+       for (var i = 0; i < histData.length; i++){
+           if (histData[i]['order_id'] == searchFor){
+               temp.push(histData[i]);
+           } 
+       }
+       if (temp != ""){
+            showOrderHistoryTable(temp);
+       } else if (temp == ""){
+           getOrderHistoryData();
+       } 
+       else {
+           alert('No Order Exist!')
+           getOrderHistoryData();
+           return;
+       }
+    });
       async function getOrderHistoryData(){
-           
+          console.log(currentUser); 
           await  $.ajax({
                 url:'ajax.php',
                 type:'GET',
@@ -1201,6 +1281,8 @@ var selectedPaymentCard_orderInfo = "";
                         console.log(json_data);
                         var res = JSON.parse(json_data);
                         if (res[0]["order_id"] != ""){
+                            console.log(res);
+                            histData = res;
                             showOrderHistoryTable (res);
                         } else {
                             alert("You have no order history.");
@@ -1334,15 +1416,49 @@ var selectedPaymentCard_orderInfo = "";
             orderStatus = detail;
         }
         var orderStatus = "";
-        function checkOrderStatus(){
+      async  function checkOrderStatus(){
             if (orderStatus["status"] == "Completed" || orderStatus["status"] == "Cancelled"){
                 alert('Can not proceed request because order status is ' + orderStatus["status"]);
                 return;
             }
-                $.ajax({
+            var cancellation = "";
+            var monthYear = "";
+            var minusThis = "";
+            var tickitsToMinus = "";
+            var movie = "";
+            await  $.ajax({
+                url:'ajax.php',
+                type:'GET',
+                data:{functionname:'getCancellationCharge'}, //Pass your varibale in data
+                success:function(json_data){
+                        console.log(json_data);
+                        var res = JSON.parse(json_data);
+                        if (res != "0"){
+                            console.log(res);
+                            cancellation = res;
+                            cancellation = Math.round(orderStatus['cost'] * (cancellation / 100));
+                            minusThis = (parseInt(orderStatus['cost']) - cancellation ) * -1;
+                            var temp = (orderStatus['order_date'].split('/'));
+                            monthYear = temp[0] + "/" + temp[2];
+                            tickitsToMinus = parseInt(orderStatus['total']) * -1;
+                            movie = orderStatus['movie'];
+                            console.log(monthYear);
+                            console.log(minusThis);
+
+                            alert("Cancellation charge was " + cancellation );
+                        } else {
+                            alert("Cancellation alert");
+                            return;
+                        }
+                    }
+                })
+
+
+
+               await $.ajax({
                 url:'post.php',
                 type:'POST',
-                data:{functionname:'updateorderstatus',order_id:orderStatus['order_id']}, //Pass your varibale in data
+                data:{functionname:'updateorderstatus',order_id:orderStatus['order_id'], cost:cancellation, monthYear:monthYear, minusThis:minusThis, tickitsToMinus:tickitsToMinus, movie:movie}, //Pass your varibale in data
                 success:function(json_data){
                         console.log(json_data);
                         if (json_data != 1) {
@@ -1515,6 +1631,4 @@ var selectedPaymentCard_orderInfo = "";
                     }
          })
         }
-
-      
  });
